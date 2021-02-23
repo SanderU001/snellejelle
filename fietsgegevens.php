@@ -20,18 +20,17 @@ $alle_fiesten = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST['maakfiets'])) {
     $titel = $_POST['titel'];
-    $datum = $_POST['datum'];
-    $tijdstip = $_POST['tijdstip'];
-    $opmerkingen = $_POST['opmerkingen'];
-    $kosten = $_POST['kosten'];
-    $maakFiets = "INSERT INTO reparatie (titel, datum, tijdstip, opmerkingen, kosten) VALUES ('$titel', '$datum', '$tijdstip', '$opmerkingen', '$kosten')";
+    $model = 0;
+    $type = 0;
+    $kleur = 0;
+    $maakFiets = "INSERT INTO reparatie (titel, datum, tijdstip, opmerkingen, kosten) VALUES (?,?,?,?,?)";
     $stmt = $db_conn->prepare($maakFiets);
-    var_dump($stmt->execute([$titel]));
+    var_dumP($stmt->execute([$titel]));
     header("refresh:0");
 }
 
 if (isset($_POST['deletefiets'])) {
-    $deleteFiets = "DELETE FROM reparatie WHERE titel='Gazelle';";
+    $deleteFiets = "DELETE FROM fiets WHERE (model, merk, type, kleur)";
     $stmt = $db_conn->prepare($deleteFiets);
     $stmt->execute($deleteFiets);
     header("refresh:0");
@@ -40,9 +39,9 @@ if (isset($_POST['deletefiets'])) {
 // while ($info = $stmt->fetch()) {
 //   echo("<tr><td>" . $info['merk'] . "</td><td>" . $info['model'] . "</td>");
 // }
-
-
 ?>
+
+
 <html>
 
 <head>
@@ -61,7 +60,7 @@ if (isset($_POST['deletefiets'])) {
             border-collapse: collapse;
             width: 100%;
             color: black;
-            font-family: monospace;
+            font-family: Arial, Helvetica, sans-serif;
             font-size: 25px;
             text-align: left;
         }
@@ -108,11 +107,11 @@ if (isset($_POST['deletefiets'])) {
 <body>
     <table>
         <tr>
-            <th>Titel</th>
-            <th>Datum</th>
-            <th>Tijdstip</th>
-            <th>Opmerkingen</th>
-            <th>Kosten</th>
+            <th>Model</th>
+            <th>Merk</th>
+            <th>Type</th>
+            <th>Kleur</th>
+            <th>Soort rem</th>
         </tr>
         <?php
         $conn = mysqli_connect("localhost", "root", "", "snellejelle");
@@ -120,12 +119,12 @@ if (isset($_POST['deletefiets'])) {
             die("Connection failed:" . $conn->connect_error);
         }
 
-        $sql = "SELECT titel, datum, tijdstip, opmerkingen, kosten FROM reparatie";
+        $sql = "SELECT merk, model, type, kleur, soortrem FROM fiets";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["titel"] . "</td><td>" . $row["datum"] . "</td><td>" . $row["tijdstip"] . "</td><td>" . $row["opmerkingen"] . "</td><td>" . $row["kosten"] . "</td></tr>";
+                echo "<tr><td>" . $row["merk"] . "</td><td>" . $row["model"] . "</td><td>" . $row["type"] . "</td><td>" . $row["kleur"] . "</td><td>" . $row["soortrem"] . "</td></tr>";
             }
             echo "<table>";
         } else {
@@ -135,6 +134,7 @@ if (isset($_POST['deletefiets'])) {
         $conn->close();
         ?>
     </table>
+    </div>
 </body>
 
 </html>

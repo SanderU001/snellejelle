@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2021 at 01:12 PM
+-- Generation Time: Feb 23, 2021 at 09:11 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -29,27 +29,20 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `fiets` (
+  `id` int(10) NOT NULL,
   `merk` varchar(20) NOT NULL,
   `model` varchar(30) NOT NULL,
   `type` varchar(30) NOT NULL,
   `kleur` varchar(20) NOT NULL,
-  `soort rem` varchar(30) NOT NULL
+  `soortrem` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `fiets`
 --
 
-INSERT INTO `fiets` (`merk`, `model`, `type`, `kleur`, `soort rem`) VALUES
-('Gazelle', 'Man', 'electrisch', 'rood', 'achteruit-trap rem'),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', ''),
-('0', '0', '0', '0', '');
+INSERT INTO `fiets` (`id`, `merk`, `model`, `type`, `kleur`, `soortrem`) VALUES
+(5, 'gzelle', '2021-02-03', '21:42', 'kanker', '100');
 
 -- --------------------------------------------------------
 
@@ -58,7 +51,7 @@ INSERT INTO `fiets` (`merk`, `model`, `type`, `kleur`, `soort rem`) VALUES
 --
 
 CREATE TABLE `klant` (
-  `id` int(5) NOT NULL DEFAULT 1,
+  `id` int(5) NOT NULL,
   `username` varchar(20) NOT NULL,
   `achternaam` varchar(40) NOT NULL,
   `email` varchar(40) NOT NULL,
@@ -71,7 +64,7 @@ CREATE TABLE `klant` (
 --
 
 INSERT INTO `klant` (`id`, `username`, `achternaam`, `email`, `telefoonnummer`, `wachtwoord`) VALUES
-(1, 'Sander', 'Uterwijk', 'sanderu002@gmail.com', '063295934', '123456');
+(2, 'Sander', '', '', '', '123456');
 
 -- --------------------------------------------------------
 
@@ -103,10 +96,11 @@ INSERT INTO `medewerker` (`id`, `username`, `achternaam`, `email`, `telefoonnumm
 --
 
 CREATE TABLE `reparatie` (
-  `titel` varchar(20) NOT NULL,
+  `id` int(10) NOT NULL,
+  `titel` varchar(30) NOT NULL,
   `datum` date NOT NULL,
   `tijdstip` time(6) NOT NULL,
-  `opmerkingen` text NOT NULL,
+  `opmerkingen` varchar(30) NOT NULL,
   `kosten` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -114,18 +108,46 @@ CREATE TABLE `reparatie` (
 -- Dumping data for table `reparatie`
 --
 
-INSERT INTO `reparatie` (`titel`, `datum`, `tijdstip`, `opmerkingen`, `kosten`) VALUES
-('Gazelle', '2021-01-26', '00:00:00.000000', '', '0');
+INSERT INTO `reparatie` (`id`, `titel`, `datum`, `tijdstip`, `opmerkingen`, `kosten`) VALUES
+(35, 'Gazelle', '2021-02-11', '22:42:00.000000', 'kanker', '1000');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `fiets`
+--
+ALTER TABLE `fiets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `klant`
 --
 ALTER TABLE `klant`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reparatie`
+--
+ALTER TABLE `reparatie`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `fiets`
+--
+ALTER TABLE `fiets`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `reparatie`
+--
+ALTER TABLE `reparatie`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
